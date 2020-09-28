@@ -1,8 +1,9 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Badge from "@material-ui/core/Badge";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import { makeStyles } from "@material-ui/core/styles";
+import Modal from "./Modal";
+
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -21,18 +22,18 @@ const useStyles = makeStyles({
     margin: 20,
   },
 });
-export default function Notif({ tambah }) {
+export default function Notif() {
   const classes = useStyles();
 
   return (
     <>
       <Grid item={2}>
         <Badge
-          badgeContent={tambah}
+          badgeContent={0}
           color="secondary"
           className={classes.notif}
         >
-          <NotificationsIcon />
+          <Modal />
         </Badge>
       </Grid>
     </>

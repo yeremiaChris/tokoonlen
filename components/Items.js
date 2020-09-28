@@ -6,6 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import Link from "next/link";
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Items({ data, tambahBarang }) {
+export default function Items({ data }) {
   const classes = useStyles();
 
   return (
@@ -48,12 +49,16 @@ export default function Items({ data, tambahBarang }) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary" onClick={tambahBarang}>
+          <Button size="small" color="primary">
             Tambah
           </Button>
-          <Button size="small" color="primary">
-            BELI
-          </Button>
+          <Link href="https://wa.me/621388110474">
+            <a>
+              <Button size="small" color="primary">
+                BELI
+              </Button>
+            </a>
+          </Link>
         </CardActions>
       </Card>
     </>

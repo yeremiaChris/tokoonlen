@@ -26,12 +26,18 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard() {
-  const initialValue = {
-    tambah: 0,
+  const initialState = {
+    hargaAwal: 0,
   };
-  const [tambah, setTambah] = React.useState(initialValue.tambah);
-  const tambahBarang = () => {
-    setTambah((prevState) => prevState + 1);
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "tambah":
+        return { hargaAwal: state.hargaAwal + 1 };
+
+      default:
+        return state;
+    }
   };
 
   const classes = useStyles();
@@ -41,18 +47,20 @@ export default function MediaCard() {
   if (error) return <div>Failed to load</div>;
   if (!data) return <div>Loading...</div>;
 
+  // use Reducer
+
   return (
     <>
       <Sidebar />
       <Grid container justify="space-between">
         <Grid item={10}>jumlah : </Grid>
-        <Notif tambah={tambah} />
+        <Notif />
       </Grid>
       <Grid container spacing={2} className={classes.container}>
         {data.map((e, index) => (
           <>
             <Grid item xs={6} key={index}>
-              <Item data={e} tambahBarang={tambahBarang} />
+              <Item data={e} />
             </Grid>
           </>
         ))}
