@@ -4,7 +4,6 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { items } from "./Items";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -20,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal() {
-  console.log(items);
-
+export default function TransitionsModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -57,7 +54,7 @@ export default function TransitionsModal() {
         <Fade in={open}>
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Pembelian</h2>
-            <h3 id="transition-modal-description">Item :</h3>
+            <h3 id="transition-modal-description">Item {props.title}</h3>
           </div>
         </Fade>
       </Modal>
