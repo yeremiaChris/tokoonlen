@@ -43,6 +43,7 @@ export default function Items({
   cetakAll,
   total,
   setJumlahDua,
+  jumlahDua,
 }) {
   const classes = useStyles();
 
@@ -50,8 +51,6 @@ export default function Items({
 
   React.useEffect(() => {
     setJumlah(0);
-  }, [resetJumlah]);
-  React.useEffect(() => {
     setJumlahDua(0);
   }, [resetJumlah]);
 

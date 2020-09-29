@@ -22,7 +22,13 @@ const useStyles = makeStyles({
     margin: 20,
   },
 });
-export default function Notif({ hitung, cards, cetakAll }) {
+export default function Notif({
+  hitung,
+  cards,
+  cetakAll,
+  reset,
+  resetJumlahDua,
+}) {
   const classes = useStyles();
 
   return (
@@ -33,7 +39,13 @@ export default function Notif({ hitung, cards, cetakAll }) {
           color="secondary"
           className={classes.notif}
         >
-          <Modal hitung={hitung} cetak={cetakAll} card={cards} />
+          <Modal
+            hitung={hitung}
+            cetak={cetakAll}
+            card={cards}
+            reset={reset}
+            resetJumlahDua={resetJumlahDua}
+          />
         </Badge>
       </Grid>
     </>

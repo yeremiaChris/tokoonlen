@@ -34,6 +34,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "tambah":
       return { ...state, jumlah: state.jumlah + action.value };
+    case "reset":
+      return initialState;
     case "cetak":
       return {
         ...state,
@@ -63,14 +65,22 @@ function MediaCard() {
   }
 
   const [jumlahDua, setJumlahDua] = React.useState(0);
-
+  const reset = () => {
+    setJumlahDua(0);
+  };
   if (error) return <div>Failed to load</div>;
   if (!data) return <div>Loading...</div>;
   return (
     <>
       <Sidebar />
       <Grid container justify="flex-end">
-        <Notif hitung={jumlahDua} cetakAll={cetakAll} cards={card} />
+        <Notif
+          hitung={jumlahDua}
+          cetakAll={cetakAll}
+          cards={card}
+          reset={dispatch}
+          resetJumlahDua={reset}
+        />
       </Grid>
       <Grid container spacing={2} className={classes.container}>
         {data.map((e, index) => (
@@ -85,6 +95,7 @@ function MediaCard() {
                 cetak={cetak}
                 setJumlahDua={setJumlahDua}
                 total={card.jumlah}
+                jumlahDua={jumlahDua}
               />
             </Grid>
           </>

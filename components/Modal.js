@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
     width: "90%",
   },
 }));
@@ -46,7 +47,12 @@ const useRowStyles = makeStyles({
   },
 });
 
-export default function TransitionsModal({ cetak, card, reset }) {
+export default function TransitionsModal({
+  cetak,
+  card,
+  reset,
+  resetJumlahDua,
+}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -84,120 +90,69 @@ export default function TransitionsModal({ cetak, card, reset }) {
         }}
       >
         <Fade in={open}>
-          <TableContainer component={Paper} className={classesDua.paper}>
-            <Table aria-label="collapsible table">
-              <TableHead>
-                <TableRow>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <>
-                  <React.Fragment>
-                    <TableRow className={classesDua.root}>
-                      <TableCell>
-                        <IconButton aria-label="expand row" size="small">
-                          {openDua ? (
-                            <KeyboardArrowUpIcon />
-                          ) : (
-                            <KeyboardArrowDownIcon />
-                          )}
-                        </IconButton>
-                      </TableCell>
-                      <TableCell>
-                        <IconButton
-                          color="primary"
-                          aria-label="add to shopping cart"
-                        >
-                          <AddShoppingCartIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        style={{ paddingBottom: 0, paddingTop: 0 }}
-                        colSpan={6}
-                      >
-                        <Collapse in={openDua} timeout="auto" unmountOnExit>
-                          <Box margin={1}>
-                            <Table size="small" aria-label="purchases">
-                              <TableHead>
-                                <TableRow>
-                                  <TableCell>Nama</TableCell>
-                                  <TableCell>Kuantitas</TableCell>
-                                  <TableCell>Harga</TableCell>
-                                </TableRow>
-                              </TableHead>
-                              <TableBody>
-                                {card.barang.map((e, i) => (
-                                  <>
-                                    <TableRow key={i}>
-                                      <TableCell component="th" scope="row">
-                                        {e.nama}
-                                      </TableCell>
-                                      <TableCell>{e.jumlah}</TableCell>
-                                      <TableCell>
-                                        {formatRupiah(e.harga)}
-                                      </TableCell>
-                                    </TableRow>
-
-                                    <TableRow>
-                                      <TableCell
-                                        component="th"
-                                        scope="row"
-                                      ></TableCell>
-                                      <TableCell>Total :</TableCell>
-                                      <TableCell>
-                                        {formatRupiah(e.totHarga)}
-                                      </TableCell>
-                                    </TableRow>
-
-                                    <TableRow>
-                                      <TableCell
-                                        component="th"
-                                        scope="row"
-                                      ></TableCell>
-                                      <TableCell>
-                                        <Button
-                                          variant="contained"
-                                          color="action"
-                                          size="small"
-                                          className={classes.button}
-                                          startIcon={<RestoreIcon />}
-                                        >
-                                          reset
-                                        </Button>
-                                      </TableCell>
-                                      <TableCell>
-                                        <Link href="https://wa.me/621388110474">
-                                          <a>
-                                            <Button
-                                              variant="contained"
-                                              color="secondary"
-                                              size="small"
-                                              className={classes.button}
-                                              startIcon={<SaveIcon />}
-                                            >
-                                              BELI
-                                            </Button>
-                                          </a>
-                                        </Link>
-                                      </TableCell>
-                                    </TableRow>
-                                  </>
-                                ))}
-                              </TableBody>
-                            </Table>
-                          </Box>
-                        </Collapse>
-                      </TableCell>
-                    </TableRow>
-                  </React.Fragment>
-                </>
-              </TableBody>
-            </Table>
-            {/* <h3 id="transition-modal-description">Item {props.title}</h3> */}
-          </TableContainer>
+          <div className={classes.paper}>
+            <h2 id="transition-modal-title">Transition modal</h2>
+            <Grid container>
+              <Grid item xs={4}>
+                <p>Nama Barang</p>
+              </Grid>
+              <Grid item xs={4} align="center">
+                <p>Kuantitas</p>
+              </Grid>
+              <Grid item xs={4}>
+                <p>Harga</p>
+              </Grid>
+            </Grid>
+            {card.barang.map((e, i) => (
+              <>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <p>{e.nama}</p>
+                  </Grid>
+                  <Grid item xs={4} align="center">
+                    <p>{e.jumlah}</p>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <p>{e.harga}</p>
+                  </Grid>
+                </Grid>
+                keren
+              </>
+            ))}
+            <Grid container>
+              <Grid item xs={4}></Grid>
+              <Grid item xs={4} align="center">
+                <Button
+                  variant="contained"
+                  color="action"
+                  size="small"
+                  className={classes.button}
+                  startIcon={<RestoreIcon />}
+                  onClick={() => {
+                    reset({ type: "reset" });
+                    resetJumlahDua();
+                  }}
+                >
+                  reset
+                </Button>
+              </Grid>
+              <Grid item xs={4}>
+                <Link href={`https://wa.me/6281388110474/`}>
+                  <a>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      className={classes.button}
+                      startIcon={<SaveIcon />}
+                    >
+                      Save
+                    </Button>
+                  </a>
+                </Link>
+              </Grid>
+            </Grid>
+          </div>
         </Fade>
       </Modal>
     </div>
