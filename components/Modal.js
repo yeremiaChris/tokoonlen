@@ -19,7 +19,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import { FormatBold } from "@material-ui/icons";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
+import Link from "next/link";
+import RestoreIcon from "@material-ui/icons/Restore";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -42,7 +46,7 @@ const useRowStyles = makeStyles({
   },
 });
 
-export default function TransitionsModal({ cetak, card }) {
+export default function TransitionsModal({ cetak, card, reset }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -58,14 +62,14 @@ export default function TransitionsModal({ cetak, card }) {
 
   return (
     <div>
-      <NotificationsIcon
-        color="primary"
-        fontSize="large"
-        onClick={() => {
-          handleOpen();
-          cetak();
-        }}
-      />
+      <IconButton color="secondary" aria-label="add to shopping cart">
+        <AddShoppingCartIcon
+          onClick={() => {
+            handleOpen();
+            cetak();
+          }}
+        />
+      </IconButton>
 
       <Modal
         aria-labelledby="transition-modal-title"
@@ -92,11 +96,7 @@ export default function TransitionsModal({ cetak, card }) {
                   <React.Fragment>
                     <TableRow className={classesDua.root}>
                       <TableCell>
-                        <IconButton
-                          aria-label="expand row"
-                          size="small"
-                          onClick={() => setOpenDua(!openDua)}
-                        >
+                        <IconButton aria-label="expand row" size="small">
                           {openDua ? (
                             <KeyboardArrowUpIcon />
                           ) : (
@@ -104,7 +104,14 @@ export default function TransitionsModal({ cetak, card }) {
                           )}
                         </IconButton>
                       </TableCell>
-                      <TableCell>Keranjang</TableCell>
+                      <TableCell>
+                        <IconButton
+                          color="primary"
+                          aria-label="add to shopping cart"
+                        >
+                          <AddShoppingCartIcon />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell
@@ -142,6 +149,39 @@ export default function TransitionsModal({ cetak, card }) {
                                       <TableCell>Total :</TableCell>
                                       <TableCell>
                                         {formatRupiah(e.totHarga)}
+                                      </TableCell>
+                                    </TableRow>
+
+                                    <TableRow>
+                                      <TableCell
+                                        component="th"
+                                        scope="row"
+                                      ></TableCell>
+                                      <TableCell>
+                                        <Button
+                                          variant="contained"
+                                          color="action"
+                                          size="small"
+                                          className={classes.button}
+                                          startIcon={<RestoreIcon />}
+                                        >
+                                          reset
+                                        </Button>
+                                      </TableCell>
+                                      <TableCell>
+                                        <Link href="https://wa.me/621388110474">
+                                          <a>
+                                            <Button
+                                              variant="contained"
+                                              color="secondary"
+                                              size="small"
+                                              className={classes.button}
+                                              startIcon={<SaveIcon />}
+                                            >
+                                              BELI
+                                            </Button>
+                                          </a>
+                                        </Link>
                                       </TableCell>
                                     </TableRow>
                                   </>

@@ -51,7 +51,6 @@ export default function Items({
   React.useEffect(() => {
     setJumlah(0);
   }, [resetJumlah]);
-
   React.useEffect(() => {
     setJumlahDua(0);
   }, [resetJumlah]);
