@@ -11,7 +11,7 @@ export const items = [
   },
   {
     title: "Hardman 4'8 Petite Grand Piano",
-    harga: 10.0,
+    harga: 100000,
     gambar: "/image/piano.png",
   },
   {

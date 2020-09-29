@@ -25,42 +25,67 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard() {
-  const initialState = {
-    hargaAwal: 0,
-  };
+const initialState = {
+  jumlah: 0,
+  barang: [],
+};
 
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "tambah":
-        return { hargaAwal: state.hargaAwal + 1 };
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "tambah":
+      return { ...state, jumlah: state.jumlah + action.value };
+    case "cetak":
+      return {
+        ...state,
+        barang: state.barang
+          .filter((obj) => obj.title != action.cetakObj.nama)
+          .concat(action.cetakObj),
+      };
+    default:
+      return state;
+  }
+};
 
-      default:
-        return state;
-    }
-  };
-
+function MediaCard() {
   const classes = useStyles();
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR("/api/items", fetcher);
+  const [card, dispatch] = React.useReducer(reducer, initialState);
+
+  const [resetJumlah, setResetJumlah] = React.useState(false);
+  function resetAllJumlah() {
+    setResetJumlah(!resetJumlah);
+  }
+
+  const [cetak, setCetak] = React.useState(false);
+  function cetakAll() {
+    setCetak(!cetak);
+  }
+
+  const [jumlahDua, setJumlahDua] = React.useState(0);
 
   if (error) return <div>Failed to load</div>;
   if (!data) return <div>Loading...</div>;
-
-  // use Reducer
-
   return (
     <>
       <Sidebar />
-      <Grid container justify="space-between">
-        <Grid item={10}>jumlah : </Grid>
-        <Notif />
+      <Grid container justify="flex-end">
+        <Notif hitung={jumlahDua} cetakAll={cetakAll} cards={card} />
       </Grid>
       <Grid container spacing={2} className={classes.container}>
         {data.map((e, index) => (
           <>
             <Grid item xs={6} key={index}>
-              <Item data={e} />
+              <Item
+                data={e}
+                bayarDispatch={dispatch}
+                harga={e.harga}
+                nama={e.title}
+                resetJumlah={resetJumlah}
+                cetak={cetak}
+                setJumlahDua={setJumlahDua}
+                total={card.jumlah}
+              />
             </Grid>
           </>
         ))}
@@ -68,3 +93,4 @@ export default function MediaCard() {
     </>
   );
 }
+export default MediaCard;
